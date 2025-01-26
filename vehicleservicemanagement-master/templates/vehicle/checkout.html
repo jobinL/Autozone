@@ -1,0 +1,27 @@
+{% extends 'vehicle/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+  <h1>Checkout</h1>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in cart_items %}
+      <tr>
+        <td>{{ item.product.name }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>${{ item.item_total }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <h3>Total: ${{ total_price }}</h3>
+  <a href="{% url 'address' %}" class="btn btn-primary">Proceed to Address</a>
+</div>
+{% endblock %}

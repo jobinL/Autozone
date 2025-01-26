@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Service Detail</title>
+</head>
+<body>
+    <h1>Service Detail</h1>
+    <p>Mechanic: {{ service.mechanic.name }}</p>
+    <p>Services Performed:</p>
+    <ul>
+        {% for entry in service_entries %}
+            <li>{{ entry.service_type.name }} - Hours Spent: {{ entry.hours_spent }} - Cost: ${{ entry.service_type.cost_per_hour * entry.hours_spent }}</li>
+        {% endfor %}
+    </ul>
+    <p>Total Cost: ${{ service.bill.total_cost }}</p>
+</body>
+</html>

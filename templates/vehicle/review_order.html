@@ -1,0 +1,22 @@
+<!-- review_order.html -->
+
+{% extends 'vehicle/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Review Order</h2>
+
+    <h3>Cart Items</h3>
+    <ul>
+        {% for item in cart_items %}
+        <li>{{ item.name }} - INR{{ item.price }} x {{ item.quantity }}</li>
+        {% endfor %}
+    </ul>
+    <p><strong>Total Price:</strong> INR{{ total_price }}</p>
+
+    <form method="post" action="{% url 'order_success' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">Complete Purchase</button>
+    </form>
+</div>
+{% endblock %}

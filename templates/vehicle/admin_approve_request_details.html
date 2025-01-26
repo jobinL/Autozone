@@ -1,0 +1,114 @@
+{% extends 'vehicle/adminbase.html' %}
+{% load widget_tweaks %}
+{% block content %}
+<head>
+  <style media="screen">
+    input[type=text], select, input[type=number], textarea {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    input[type=submit] {
+      width: 100%;
+      background-color: purple;
+      color: white;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    input[type=submit]:hover {
+      background-color: purple;
+    }
+  </style>
+</head>
+
+<br><br><br><br><br>
+<h3 style="text-align:center;">APPROVE REQUEST OR CHANGE STATUS</h3>
+<div>
+  <form method="post" style="margin-left:200px;margin-right:200px;">
+      {% csrf_token %}
+
+   
+
+    <label for="issues">Select Issues:</label><br>
+    <input type="checkbox" id="issue1" name="issues" value="7500" onchange="calculateTotal()"> Break Issue (₹7500)<br>
+    <input type="checkbox" id="issue2" name="issues" value="15000" onchange="calculateTotal()"> Engine Failure (₹15000)<br>
+    <input type="checkbox" id="issue3" name="issues" value="3750" onchange="calculateTotal()"> Fluid Leakage (₹3750)<br>
+    <input type="checkbox" id="issue4" name="issues" value="6000" onchange="calculateTotal()"> A/C Problems (₹6000)<br>
+    <input type="checkbox" id="issue5" name="issues" value="9000" onchange="calculateTotal()"> Battery Failure (₹9000)<br>
+    <input type="checkbox" id="issue6" name="issues" value="others" onchange="handleOthers()"> Others<br>
+    <br>
+
+    <div id="custom-cost-container" style="display:none;">
+      <label for="custom-cost">Enter Custom Cost:</label>
+      <input type="number" id="custom-cost" oninput="calculateTotal()" placeholder="Enter custom cost in ₹">
+    </div>
+
+     <!-- Number of Working Hours -->
+     <label for="working-hours">Number of Working Hours:</label>
+     <input type="number" id="working-hours" oninput="calculateTotal()" placeholder="Enter number of working hours">
+     <br>
+
+    <!-- Display the sum of selected issues -->
+    <label for="selected-issues-total">Estimated Total</label>
+    <input type="text" id="selected-issues-total" class="form-control" readonly="readonly">
+    
+    <label for="cost">Repair Cost</label>
+    {% render_field adminenquiry.cost class="form-control" placeholder="Repair Cost" %}
+
+    <label for="mechanic">Assign Mechanic</label>
+    {% render_field adminenquiry.mechanic class="form-control"  %}
+
+    <label for="status">Status</label>
+    {% render_field adminenquiry.status class="form-control" %}
+
+    <input type="submit" value="Submit">
+  </form>
+</div>
+
+<script>
+  function handleOthers() {
+    const othersCheckbox = document.querySelector('input[name="issues"][value="others"]');
+    const customCostContainer = document.getElementById('custom-cost-container');
+    
+    if (othersCheckbox.checked) {
+      customCostContainer.style.display = 'block';
+    } else {
+      customCostContainer.style.display = 'none';
+      document.getElementById('custom-cost').value = '';
+    }
+    calculateTotal();
+  }
+
+  function calculateTotal() {
+    const checkboxes = document.querySelectorAll('input[name="issues"]:checked');
+    const customCost = document.getElementById('custom-cost');
+    const workingHours = document.getElementById('working-hours').value || 0; // Get number of working hours
+    const selectedIssuesTotal = document.getElementById('selected-issues-total'); // Reference to the total display element
+    let totalCost = 0;
+
+    checkboxes.forEach(checkbox => {
+      if (checkbox.value === 'others') {
+        totalCost += parseFloat(customCost.value) || 0;
+      } else {
+        totalCost += parseFloat(checkbox.value);
+      }
+    });
+
+    const workingHoursCost = workingHours * 150; // Calculate cost based on working hours
+    totalCost += workingHoursCost; // Add working hours cost to total
+
+    selectedIssuesTotal.value = `₹${totalCost}`; // Update the selected issues total display
+  }
+</script>
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+{% endblock content %}

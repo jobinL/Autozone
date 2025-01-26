@@ -1,0 +1,53 @@
+{% extends 'vehicle/base.html' %}
+
+{% block content %}
+
+<style>
+    .btn-success {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+</style>
+<div class="container mt-5">
+  <h1>Enter Shipping Address</h1>
+  <form method="post" action="{% url 'address' %}">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="id_first_name" class="form-label">First name:</label>
+      <input type="text" name="first_name" id="id_first_name" class="form-control" value="{{ form.first_name.value }}">
+    </div>
+    <div class="form-group">
+      <label for="id_last_name" class="form-label">Last name:</label>
+      <input type="text" name="last_name" id="id_last_name" class="form-control" value="{{ form.last_name.value }}">
+    </div>
+    <div class="form-group">
+      <label for="id_address_line1" class="form-label">Address line 1:</label>
+      <input type="text" name="address_line1" id="id_address_line1" class="form-control" value="{{ form.address_line1.value }}">
+    </div>
+    <div class="form-group">
+      <label for="id_address_line2" class="form-label">Address line 2:</label>
+      <input type="text" name="address_line2" id="id_address_line2" class="form-control" value="{{ form.address_line2.value }}">
+    </div>
+    <div class="form-group">
+      <label for="id_city" class="form-label">City:</label>
+      <input type="text" name="city" id="id_city" class="form-control" value="{{ form.city.value }}">
+    </div>
+    <div class="form-group">
+      <label for="id_state" class="form-label">State:</label>
+      <input type="text" name="state" id="id_state" class="form-control" value="{{ form.state.value }}">
+    </div>
+    <div class="form-group">
+      <label for="id_postal_code" class="form-label">Postal code:</label>
+      <input type="text" name="postal_code" id="id_postal_code" class="form-control" value="{{ form.postal_code.value }}">
+    </div>
+    <div class="form-group">
+      <label for="id_country" class="form-label">Country:</label>
+      <input type="text" name="country" id="id_country" class="form-control" value="{{ form.country.value }}">
+    </div>
+    <form method="post" action="{% url 'review_order' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">Review Order</button>
+    </form>
+  </form>
+</div>
+{% endblock %}
