@@ -85,12 +85,3 @@ autozone/
 
 This project is licensed under the [MIT License](LICENSE).  
 
-## 📸 Screenshots
-
-### 🔧 Index Page
-![Index_Page](Autozone-Images/Screenshot 2025-01-28 102657)
-
-### 🛍️ Spare Parts Store
-![Spare Parts Page](https://i.imgur.com/abc123.png)
-
-
